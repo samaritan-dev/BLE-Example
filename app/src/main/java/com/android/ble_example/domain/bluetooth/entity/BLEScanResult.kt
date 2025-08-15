@@ -1,8 +1,8 @@
-package com.android.ble_example.domain.model
+package com.android.ble_example.domain.bluetooth.entity
 
 import android.bluetooth.BluetoothDevice
 
-data class BLEDevice(
+data class BLEScanResult(
     val device: BluetoothDevice,
     val name: String?,
     val address: String,

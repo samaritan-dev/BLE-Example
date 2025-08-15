@@ -1,9 +1,9 @@
-package com.android.ble_example.domain.model
+package com.android.ble_example.domain.bluetooth.entity
 
 import android.bluetooth.BluetoothGattCharacteristic
 import java.util.UUID
 
-data class BLECharacteristic(
+data class BLEGattCharacteristic(
     val characteristic: BluetoothGattCharacteristic,
     val uuid: UUID,
     val properties: Int,
@@ -14,7 +14,7 @@ data class BLECharacteristic(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as BLECharacteristic
+        other as BLEGattCharacteristic
 
         if (uuid != other.uuid) return false
         if (properties != other.properties) return false

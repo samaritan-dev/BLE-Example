@@ -1,11 +1,11 @@
-package com.android.ble_example.domain.model
+package com.android.ble_example.domain.bluetooth.entity
 
 import android.bluetooth.BluetoothGattService
 import java.util.UUID
 
-data class BLEService(
+data class BLEGattService(
     val service: BluetoothGattService,
     val uuid: UUID,
     val type: Int,
-    val characteristics: List<BLECharacteristic> = emptyList()
+    val characteristics: List<BLEGattCharacteristic> = emptyList()
 )
