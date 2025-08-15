@@ -14,8 +14,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -30,20 +33,20 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    
+
     @Inject
     lateinit var permissionHandler: PermissionHandler
-    
+
     private val viewModel: BLEViewModel by viewModels()
-    
+
     private val bluetoothManager: BluetoothManager by lazy {
         getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
     }
-    
+
     private val bluetoothAdapter: BluetoothAdapter? by lazy {
         bluetoothManager.adapter
     }
-    
+
     private val requestBluetoothEnable = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -53,7 +56,7 @@ class MainActivity : ComponentActivity() {
             Toast.makeText(this, "Bluetooth is required for this app", Toast.LENGTH_LONG).show()
         }
     }
-    
+
     private val requestPermissions = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -64,35 +67,42 @@ class MainActivity : ComponentActivity() {
             Toast.makeText(this, "Some permissions were denied", Toast.LENGTH_LONG).show()
         }
     }
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        
+
         setContent {
             BLEExampleTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    BLEScreen(
-                        viewModel = viewModel,
-                        onRequestPermissions = { checkAndRequestPermissions() }
-                    )
+                    Scaffold {
+                        Column(
+                            modifier = Modifier.padding(it)
+                        ) {
+                            BLEScreen(
+                                viewModel = viewModel,
+                                onRequestPermissions = { checkAndRequestPermissions() }
+                            )
+                        }
+                    }
                 }
             }
         }
-        
+
         // Check Bluetooth and permissions on startup
         checkBluetoothAndPermissions()
     }
-    
+
     private fun checkBluetoothAndPermissions() {
         if (bluetoothAdapter == null) {
-            Toast.makeText(this, "Bluetooth is not supported on this device", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Bluetooth is not supported on this device", Toast.LENGTH_LONG)
+                .show()
             return
         }
-        
+
         if (!bluetoothAdapter!!.isEnabled) {
             val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             requestBluetoothEnable.launch(enableBtIntent)
@@ -100,12 +110,12 @@ class MainActivity : ComponentActivity() {
             checkAndRequestPermissions()
         }
     }
-    
+
     private fun checkAndRequestPermissions() {
         if (permissionHandler.hasRequiredPermissions()) {
             return
         }
-        
+
         if (permissionHandler.shouldShowPermissionRationale(this)) {
             // Show rationale dialog
             showPermissionRationaleDialog()
@@ -114,13 +124,13 @@ class MainActivity : ComponentActivity() {
             requestPermissions.launch(permissionHandler.getRequiredPermissions())
         }
     }
-    
+
     private fun showPermissionRationaleDialog() {
         // Using a simple approach - in a real app, you might want to use Compose AlertDialog
         // For now, we'll just request permissions directly
         requestPermissions.launch(permissionHandler.getRequiredPermissions())
     }
-    
+
     override fun onResume() {
         super.onResume()
         // Check if Bluetooth is still enabled
