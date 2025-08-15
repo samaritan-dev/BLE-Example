@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">BLE-Example</string>
+    <string name="ble_scanner">BLE Scanner</string>
+    <string name="scan_for_devices">Scan for devices</string>
+    <string name="stop_scan">Stop scan</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="permissions_required">Permissions Required</string>
+    <string name="bluetooth_permission_rationale">This app needs Bluetooth and Location permissions to scan for BLE devices.</string>
+    <string name="grant_permissions">Grant Permissions</string>
+    <string name="cancel">Cancel</string>
+    <string name="bluetooth_required">Bluetooth is required for this app</string>
+    <string name="bluetooth_not_supported">Bluetooth is not supported on this device</string>
+    <string name="permissions_granted">All permissions granted!</string>
+    <string name="permissions_denied">Some permissions were denied</string>
+    <string name="ready_to_scan">Ready to scan</string>
+    <string name="scanning_for_devices">Scanning for devices...</string>
+    <string name="connecting">Connecting...</string>
+    <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="error_occurred">Error occurred</string>
+    <string name="no_devices_found">No devices found. Tap scan to start discovering BLE devices.</string>
+    <string name="discovered_devices">Discovered Devices</string>
+    <string name="discovered_services">Discovered Services</string>
+</resources>
